@@ -14,11 +14,11 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
     }),
     CredentialsProvider({
-      name: "credentials",
+      type: "credentials",
       credentials: {
         email: {
           label: "email",
-          type: "text"
+          type: "email"
         },
         password: {
           label: "password",
