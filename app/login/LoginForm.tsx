@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../components/inputs/Input";
 import Heading from "../components/products/Heading";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
@@ -10,8 +10,13 @@ import { AiOutlineGoogle } from "react-icons/ai";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { SafeUser } from "@/types";
 
-const LoginForm = () => {
+interface LoginFormProps {
+  currentUser: SafeUser | null;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -26,6 +31,13 @@ const LoginForm = () => {
 
   const router = useRouter();
 
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/");
+      router.refresh();
+    }
+  }, []);
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     signIn("credentials", {
@@ -34,7 +46,7 @@ const LoginForm = () => {
     }).then((callback) => {
       setIsLoading(false);
       if (callback?.ok) {
-        router.push("/cart");
+        router.push("/");
         router.refresh();
         toast.success("Logged In");
       }
@@ -44,6 +56,11 @@ const LoginForm = () => {
       }
     });
   };
+
+  if (currentUser) {
+    return <p className="text-center">Logged in. Redirecting...</p>;
+  }
+
   return (
     <>
       <Heading title="Sign in to E~Shop" />
