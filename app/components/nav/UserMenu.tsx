@@ -7,7 +7,6 @@ import Link from "next/link";
 import MenuItem from "./MenuItem";
 import { signOut } from "next-auth/react";
 import BackDrop from "./BackDrop";
-import { User } from "@prisma/client";
 import { SafeUser } from "@/types";
 
 interface UserMenuProps {
@@ -20,6 +19,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const toggleOpen = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
+
   return (
     <>
       <div className="relative z-30">
