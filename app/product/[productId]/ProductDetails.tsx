@@ -66,8 +66,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   }, [cartProducts]);
 
   const productRating =
-    product.reviews.reduce((acc: number, item: any) => item.rating + acc, 0) /
-    product.reviews.length;
+    product.review.reduce((acc: number, item: any) => item.rating + acc, 0) /
+    product.review.length;
 
   const handleColorSelect = useCallback(
     (value: SelectedImgType) => {
@@ -108,7 +108,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         <h2 className="text-3xl font-medium text-slate-700">{product.name}</h2>
         <div className="flex items-center gap-2">
           <Rating value={productRating} readOnly />
-          <div>{product.reviews.length} reviews</div>
+          <div>{product.review.length} review</div>
         </div>
         <Horizontal />
         <div className="text-justify">{product.description} </div>
